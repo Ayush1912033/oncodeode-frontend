@@ -7,13 +7,13 @@ import {
   StyleSheet,
   Image,
 } from "@react-pdf/renderer";
-import logo from "./assets/logoReport.png"; // ✅ Ensure this is a PNG or JPG, not WEBP
+import logo from "./assets/logoReport.png"; // ✅ Ensure this is a PNG or JPG
 
 // ===================== STYLES =====================
 const styles = StyleSheet.create({
   page: {
     paddingTop: 100,
-    paddingHorizontal: 50,
+    paddingHorizontal: 40,
     paddingBottom: 60,
     fontFamily: "Helvetica",
     backgroundColor: "#FFFFFF",
@@ -22,9 +22,9 @@ const styles = StyleSheet.create({
   // --- Header (Professional Letterhead) ---
   header: {
     position: "absolute",
-    top: 20,
-    left: 40,
-    right: 40,
+    top: 18,
+    left: 36,
+    right: 36,
     flexDirection: "row",
     alignItems: "center",
     justifyContent: "space-between",
@@ -39,6 +39,9 @@ const styles = StyleSheet.create({
   headerCenter: {
     flex: 2,
     alignItems: "center",
+    justifyContent: "center",
+    // ensure center has enough horizontal space
+    paddingHorizontal: 10,
   },
   headerRight: {
     flex: 1,
@@ -49,14 +52,18 @@ const styles = StyleSheet.create({
     height: 60,
     objectFit: "contain",
   },
+  // slightly smaller title so it fits on one line consistently
   headerTitle: {
-    fontSize: 18,
+    fontSize: 16,
     fontFamily: "Helvetica-Bold",
     color: "#1E3A8A",
+    textAlign: "center",
   },
   headerSubtitle: {
-    fontSize: 10,
+    fontSize: 9,
     color: "#6B7280",
+    marginTop: 2,
+    textAlign: "center",
   },
   headerDate: {
     fontSize: 10,
@@ -159,6 +166,9 @@ const styles = StyleSheet.create({
 const ReportDocument = ({ patient, results }) => {
   const currentDate = new Date().toLocaleDateString();
 
+  // use non-breaking spaces to prevent title wrapping
+  const title = "OncoDecode\u00A0Prediction\u00A0Report";
+
   return (
     <Document>
       <Page size="A4" style={styles.page}>
@@ -169,7 +179,7 @@ const ReportDocument = ({ patient, results }) => {
           </View>
 
           <View style={styles.headerCenter}>
-            <Text style={styles.headerTitle}>OncoDecode Prediction Report</Text>
+            <Text style={styles.headerTitle}>{title}</Text>
             <Text style={styles.headerSubtitle}>
               AI-based Cancer Type, Stage & Survival Prediction System
             </Text>

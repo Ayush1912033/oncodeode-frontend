@@ -8,8 +8,6 @@ import heroAnimation from "./assets/doctor.json"; // ✅ Download any Lottie ani
 import AOS from "aos";
 import "aos/dist/aos.css";
 
-
-
 const Dashboard = () => {
   const navigate = useNavigate();
   const doctorId = localStorage.getItem("doctorId");
@@ -72,8 +70,9 @@ const Dashboard = () => {
         .fixed-header {
           position: fixed;
           top: 0;
+          left: 0;
           width: 100%;
-          background: rgba(255, 255, 255, 0.95);
+          background: rgba(255, 255, 255, 0.97);
           backdrop-filter: blur(10px);
           display: flex;
           justify-content: space-between;
@@ -114,15 +113,42 @@ const Dashboard = () => {
           -webkit-text-fill-color: transparent;
         }
 
-        .nav-links a {
-          margin-left: 30px;
-          text-decoration: none;
-          font-weight: 600;
-          color: #4b1f8c;
-          transition: color 0.3s ease;
+        /* --- NAVIGATION --- */
+        .nav-links {
+          display: flex;
+          align-items: center;
+          justify-content: flex-end;
+          gap: 40px;
+          flex-shrink: 0;
         }
 
-        .nav-links a:hover {
+        .nav-links a {
+          text-decoration: none;
+          font-weight: 600;
+          font-size: 1rem;
+          color: #4b1f8c;
+          transition: all 0.3s ease;
+          position: relative;
+        }
+
+        .nav-links a::after {
+          content: "";
+          position: absolute;
+          left: 0;
+          bottom: -4px;
+          width: 0%;
+          height: 2px;
+          background: #8b5cf6;
+          transition: width 0.3s ease;
+        }
+
+        .nav-links a:hover::after,
+        .nav-links a.active::after {
+          width: 100%;
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
           color: #8b5cf6;
         }
 
@@ -136,7 +162,7 @@ const Dashboard = () => {
           justify-content: center;
           text-align: left;
           padding: 0 80px;
-          margin-top: 70px; /* header offset */
+          margin-top: 70px; /* offset for header */
           overflow: hidden;
         }
 
@@ -321,22 +347,18 @@ const Dashboard = () => {
             <img src={oncoLogo} alt="OncoDecode Logo" className="header-logo" />
             <span className="header-title">OncoDecode</span>
           </div>
-          <div className="nav-links">
+
+          <nav className="nav-links">
             <a href="#" className="active">Home</a>
             <a href="/analysis">Analysis</a>
             <a href="/login">Logout</a>
-          </div>
+          </nav>
         </div>
 
         {/* HERO SECTION */}
         <section className="hero-section">
           <div className="hero-inner">
-            <Lottie
-              animationData={heroAnimation}
-              loop
-              autoplay
-              className="hero-animation"
-            />
+            <Lottie animationData={heroAnimation} loop autoplay className="hero-animation" />
             <div className="hero-text">
               <h1>Welcome to OncoDecode</h1>
               <p>Empowering Doctors with AI-driven Cancer Analysis</p>
@@ -383,7 +405,7 @@ const Dashboard = () => {
             </div>
           </section>
 
-          {/* Recent Activity + Reports */}
+          {/* Recent Reports + Activity */}
           <section className="reports-activity-grid" data-aos="fade-up">
             <div>
               <h2>Recent Reports</h2>
